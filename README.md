@@ -11,7 +11,7 @@ pip3 install -r requirements.txt
 
 ## Usage
 ```bash
-brutes -d example.com
+python3 brutes.py -d example.com
 ```
 ```console
 Switch:

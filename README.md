@@ -1,2 +1,7 @@
 # Installation
-enumerates subdomains with brute forcing.
+```
+git clone https://github.com/MaMad4Ever/Brutes.git
+```
+```
+pip3 install -r requirements.txt
+```

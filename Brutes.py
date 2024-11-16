@@ -26,14 +26,14 @@ def domain_scanner(domain_name, sub_domain_names, show_unreachable, max_workers)
 
     urls = [f"https://{subdomain}.{domain_name}" for subdomain in sub_domain_names]
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:  # تعداد تردها را می‌توان تنظیم کرد
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_url = {executor.submit(check_subdomain, url): url for url in urls}
         
         for future in as_completed(future_to_url):
             url, status = future.result()
             if status == 'reachable':
                 reachable_urls.append(url)
-                print(f'[+] {url} - Reachable')
+                print(f'[+] {url}')
             elif show_unreachable:
                 unreachable_urls.append(url)
                 print(f'[-] {url} - {status}')
@@ -52,7 +52,6 @@ def domain_scanner(domain_name, sub_domain_names, show_unreachable, max_workers)
 
 
 if __name__ == '__main__':
-    # تنظیم argparse برای دریافت ورودی از خط فرمان
     parser = argparse.ArgumentParser(description='Domain Scanner for Subdomains')
     parser.add_argument('-d', '--domain', required=True, help='Enter the Domain Name')
     parser.add_argument('-u', '--show-unreachable', action='store_true', help='Show unreachable URLs')
@@ -66,14 +65,13 @@ if __name__ == '__main__':
     wordlist_path = args.wordlist.strip()
     print('\n')
 
-    # بررسی وجود فایل ورد لیست
     if not os.path.isfile(wordlist_path):
         print(f"Error: The wordlist file '{wordlist_path}' does not exist.")
         exit(1)
 
     try:
         with open(wordlist_path, 'r') as file:
-            sub_dom = [line.strip() for line in file if line.strip()]  # حذف خطوط خالی
+            sub_dom = [line.strip() for line in file if line.strip()]
         domain_scanner(dom_name, sub_dom, show_unreachable, max_workers)
     except FileNotFoundError:
         print("Error: 'subdomain_names.txt' file not found.")

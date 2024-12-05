@@ -8,6 +8,8 @@ pip3 install -r requirements.txt
 
 ## Wordlist recommendations
 - **n0kovo's** wordlists: [Can be downloaded from here](https://github.com/n0kovo/n0kovo_subdomains)
+- **assetnote** wordlists: [Can be downloaded from here](https://wordlists.assetnote.io)
+- **SecLists** wordlists: [Can be downloaded from here](https://github.com/danielmiessler/SecLists)
 
 ## Usage
 ```bash

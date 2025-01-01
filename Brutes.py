@@ -17,14 +17,14 @@ def check_subdomain(url):
     except Exception as e:
         return url, f'error: {e}'
 
-def domain_scanner(domain_name, sub_domain_names, show_unreachable, max_workers):
+def domain_scanner(domain_name, sub_domain_names, show_unreachable, max_workers, mode):
     print('----------- Scanner Started -----------')
     print('---- URL after scanning subdomains ----')
 
     reachable_urls = []
     unreachable_urls = []
 
-    urls = [f"https://{subdomain}.{domain_name}" for subdomain in sub_domain_names]
+    urls = [f"{mode}://{subdomain}.{domain_name}" for subdomain in sub_domain_names]
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_url = {executor.submit(check_subdomain, url): url for url in urls}
@@ -33,7 +33,7 @@ def domain_scanner(domain_name, sub_domain_names, show_unreachable, max_workers)
             url, status = future.result()
             if status == 'reachable':
                 reachable_urls.append(url)
-                print(f'[+] {url}')
+                print(f'[+] {url} - Reachable')
             elif show_unreachable:
                 unreachable_urls.append(url)
                 print(f'[-] {url} - {status}')
@@ -57,12 +57,14 @@ if __name__ == '__main__':
     parser.add_argument('-u', '--show-unreachable', action='store_true', help='Show unreachable URLs')
     parser.add_argument('-t', '--threads', type=int, default=10, help='Number of threads to use (default: 10)')
     parser.add_argument('-w', '--wordlist', type=str, default='subdomain_names.txt', help='Path to the wordlist file (default: subdomain_names.txt)')
+    parser.add_argument('-m', '--mode', choices=['http', 'https'], default='https', help='Protocol to use (default: https)')
     args = parser.parse_args()
 
     dom_name = args.domain.strip()
     show_unreachable = args.show_unreachable
     max_workers = args.threads
     wordlist_path = args.wordlist.strip()
+    mode = args.mode.strip()
     print('\n')
 
     if not os.path.isfile(wordlist_path):
@@ -72,6 +74,6 @@ if __name__ == '__main__':
     try:
         with open(wordlist_path, 'r') as file:
             sub_dom = [line.strip() for line in file if line.strip()]
-        domain_scanner(dom_name, sub_dom, show_unreachable, max_workers)
+        domain_scanner(dom_name, sub_dom, show_unreachable, max_workers, mode)
     except FileNotFoundError:
         print("Error: 'subdomain_names.txt' file not found.")

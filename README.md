@@ -15,10 +15,15 @@ pip3 install -r requirements.txt
 ```bash
 python3 brutes.py -d example.com
 ```
+```bash
+python3 brutes.py -d example.com -m http
+```
 ```console
 Switch:
    -d, --domain                       Enter the Domain Name
    -u, --show-unreachable             Show unreachable URLs
    -t, --threads                      Number of threads to use (default: 10)
    -w, --wordlist                     Path to the wordlist file (default: subdomain_names.txt)
+   -m', --mode                        Protocol to use (default: https)
+
 ```

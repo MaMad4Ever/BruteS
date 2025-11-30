@@ -21,10 +21,13 @@ python3 brutes.py -d example.com -m http
 ```
 ```console
 Switch:
-   -d, --domain                       Enter the Domain Name
-   -u, --show-unreachable             Show unreachable URLs
-   -t, --threads                      Number of threads to use (default: 10)
-   -w, --wordlist                     Path to the wordlist file (default: subdomain_names.txt)
-   -m', --mode                        Protocol to use (default: https)
-
+  -h, --help                           (show this help message and exit)
+  -d DOMAIN, --domain                  (DOMAIN Enter the Domain Name)
+  -u, --show-unreachable               (Show unreachable URLs)
+  -t THREADS, --threads THREADS        (Number of threads to use (default: 10))
+  -w WORDLIST, --wordlist WORDLIST     (Path to the wordlist file (default:subdomain_names.txt)
+  -m {http,https}, --mode {http,https} (Protocol to use (default: https))
+  -s, --silent                         (Run scanner silently)
+  -o OUTPUT, --output OUTPUT           (Save reachable subdomains to a file)
+  --timeout TIMEOUT                    (Request timeout in seconds (default: 5))
 ```
